@@ -1,3 +1,4 @@
+package MazeStuff;
 
 
 public class ArrayStack<E> implements Stack{

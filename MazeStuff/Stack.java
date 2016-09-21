@@ -1,3 +1,4 @@
+package MazeStuff;
 
 public interface Stack<E> {
 	public E pop();

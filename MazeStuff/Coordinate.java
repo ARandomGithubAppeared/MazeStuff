@@ -1,3 +1,4 @@
+package MazeStuff;
 
 public class Coordinate {
 	private int x;
