@@ -1,4 +1,4 @@
-package MazeStuff;
+
 
 
 public class ArrayStack<E> implements Stack{
@@ -48,7 +48,7 @@ public class ArrayStack<E> implements Stack{
 		top++;
 		try{	
 			stack[top]=(E) elt;
-		}catch(ArrayIndexOutOfBoundsException| NullPointerException e){
+		}catch(ArrayIndexOutOfBoundsException e){
 			
 			size=size+100;
 			E[] data = (E[]) new Object[size];
