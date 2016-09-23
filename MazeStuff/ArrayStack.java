@@ -30,7 +30,7 @@ public class ArrayStack<E> implements Stack{
 
 	
 	public E top() {
-		if (top == size -1 ){
+		if (top == -1 ){
 			return null;
 		}else{
 			return stack[top];

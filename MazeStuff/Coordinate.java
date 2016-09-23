@@ -21,4 +21,9 @@ public class Coordinate {
     public int getCol() {
         return col;
     }
+    
+    public String toString(){
+    	return "X: " + getCol() + " Y: " + getRow();
+    }
+
 }
