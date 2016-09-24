@@ -32,11 +32,17 @@ public class Maze {
 	}
 
 	public MazeSquare squareAt(Coordinate p) {
-		return square[p.getRow()][p.getCol()];
+			return square[p.getRow()][p.getCol()];
+
+		
 	}
 
 	public void visitPos(Coordinate p) {
-		square[p.getRow()][p.getCol()].visit();
+		try {
+			square[p.getRow()][p.getCol()].visit();
+		} catch (Exception e) {
+			square[p.getRow()][p.getCol()].visit();
+		}
 	}
 
 	public void abandonPos(Coordinate p) {
@@ -52,19 +58,19 @@ public class Maze {
 	}
 
 	public Coordinate northOf(Coordinate p) {
-		return new Coordinate(p.getRow()-1, p.getCol());
+		return new Coordinate(p.getRow() - 1, p.getCol());
 	}
 
 	public Coordinate eastOf(Coordinate p) {
-		return new Coordinate(p.getRow(), p.getCol()+1);
+		return new Coordinate(p.getRow(), p.getCol() + 1);
 	}
 
 	public Coordinate southOf(Coordinate p) {
-		return new Coordinate(p.getRow()+1, p.getCol());
+		return new Coordinate(p.getRow() + 1, p.getCol());
 	}
 
 	public Coordinate westOf(Coordinate p) {
-		return new Coordinate(p.getRow(), p.getCol()-1);
+		return new Coordinate(p.getRow(), p.getCol() - 1);
 	}
 
 	public boolean movePossible(Coordinate from, Coordinate to) {
@@ -93,8 +99,10 @@ public class Maze {
 					}
 				}
 			}
+			return true;
+		} else {
+			return false;
 		}
-		return true;
 
 	}
 
@@ -102,47 +110,56 @@ public class Maze {
 		Random rng = new Random();
 		startPos = new Coordinate(rng.nextInt(numRows), 0);
 		squareAt(startPos).toggleWall(Direction.WEST);
-		finishPos = new Coordinate(rng.nextInt(numRows),numCols-1);
+		finishPos = new Coordinate(rng.nextInt(numRows), numCols - 1);
 		squareAt(finishPos).toggleWall(Direction.EAST);
 		Coordinate current = startPos;
 
 		ArrayStack stack = new ArrayStack();
-
+		visitPos(current);
 		stack.push(current);
 		while (stack.top() != null) {
 			// Coordinate test=(Coordinate)stack.top();
 			// System.out.println(test.toString());
 
-			visitPos(current);
+			
+			
+				visitPos(current);
+			
+			
 			ArrayList neighbors = unvisitedNeighbors(current);
 
 			if (!neighbors.isEmpty()) {
 				rng = new Random();
 				Coordinate next = (Coordinate) neighbors.get(rng.nextInt(neighbors.size()));
-			
-			//	System.out.println(current.toString());
-			//	System.out.println(next.toString());
-			//	if (movePossible(current, next)) {
-					if (northOf(current).equals(next)) {
-						squareAt(current).toggleWall(Direction.NORTH);
-						squareAt(next).toggleWall(Direction.SOUTH);
-					}
-					if (southOf(current).equals(next)) {
-						squareAt(current).toggleWall(Direction.SOUTH);
-						squareAt(next).toggleWall(Direction.NORTH);
-					}
-					if (eastOf(current).equals(next)) {
-						squareAt(current).toggleWall(Direction.EAST);
-						squareAt(next).toggleWall(Direction.WEST);
-					}
-					if (westOf(current).equals(next)) {
-						squareAt(current).toggleWall(Direction.WEST);
-						squareAt(next).toggleWall(Direction.EAST);
-					}
-					current=next;
-					stack.push(current);
-				
+
+				// System.out.println(current.toString());
+				// System.out.println(next.toString());
+				// if (movePossible(current, next)) {
+				if (northOf(current).equals(next)) {
+					squareAt(current).toggleWall(Direction.NORTH);
+					squareAt(next).toggleWall(Direction.SOUTH);
+				}
+				if (southOf(current).equals(next)) {
+					squareAt(current).toggleWall(Direction.SOUTH);
+					squareAt(next).toggleWall(Direction.NORTH);
+				}
+				if (eastOf(current).equals(next)) {
+					squareAt(current).toggleWall(Direction.EAST);
+					squareAt(next).toggleWall(Direction.WEST);
+				}
+				if (westOf(current).equals(next)) {
+					squareAt(current).toggleWall(Direction.WEST);
+					squareAt(next).toggleWall(Direction.EAST);
+				}
+
+				current = next;
+				stack.push(current);
+				neighbors.clear();
+				// }
+			} else {
+				current = (Coordinate) stack.pop();
 			}
+			// System.out.println(this.toString());
 		}
 
 	}
@@ -229,6 +246,6 @@ public class Maze {
 		int c = fromUser.nextInt();
 
 		Maze aMaze = new Maze(r, c);
-		System.out.println(aMaze);
+		// System.out.println(aMaze);
 	}
 }

@@ -21,7 +21,7 @@ public class ArrayStack<E> implements Stack{
 	}
 	
 	public E pop() {
-		if (top == size -1 ){
+		if (top == -1){
 			return null;
 		}else{
 			return stack[top--];
@@ -48,12 +48,12 @@ public class ArrayStack<E> implements Stack{
 		top++;
 		try{	
 			stack[top]=(E) elt;
-		}catch(ArrayIndexOutOfBoundsException e){
+		}catch(ArrayIndexOutOfBoundsException | NullPointerException e){
 			
-			size=size+100;
+			size=size*2;
 			E[] data = (E[]) new Object[size];
 			
-			for (int x=0;x<size-100;x++){
+			for (int x=0;x<size/2;x++){
 				data[x]=stack[x];
 			}
 			stack= data;
