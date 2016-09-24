@@ -120,8 +120,8 @@ public class Maze {
 				rng = new Random();
 				Coordinate next = (Coordinate) neighbors.get(rng.nextInt(neighbors.size()));
 			
-				System.out.println(current.toString());
-				System.out.println(next.toString());
+			//	System.out.println(current.toString());
+			//	System.out.println(next.toString());
 			//	if (movePossible(current, next)) {
 					if (northOf(current).equals(next)) {
 						squareAt(current).toggleWall(Direction.NORTH);
@@ -142,18 +142,6 @@ public class Maze {
 					current=next;
 					stack.push(current);
 				
-				
-
-				
-				//neighbors.clear();
-				try {
-					Thread.sleep(100); // 1000 milliseconds is one second.
-					System.out.println(this.toString());
-				} catch (InterruptedException ex) {
-					Thread.currentThread().interrupt();
-				}
-			} else {
-				current = (Coordinate) stack.pop();
 			}
 		}
 

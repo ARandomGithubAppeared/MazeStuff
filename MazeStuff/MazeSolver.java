@@ -7,11 +7,41 @@ public class MazeSolver {
     public static MazeDisplay myWindow;
 
     public static void findPath(Maze theMaze) {
-        // solver algorithm goes here.
-        // any time a MazeSquare's state changes
-        // your code must call myWindow.update(Coordinate)
-        // with the coordinates of the changed square.
-    }
+		Coordinate startPos = theMaze.getStart();
+		Coordinate finishPos = theMaze.getFinish();
+		Coordinate current = startPos;
+		ArrayStack stack= new ArrayStack();
+		theMaze.visitPos(startPos);
+		while (current.equals(finishPos)){
+			if (theMaze.movePossible(current,theMaze.northOf(current))){
+				current=theMaze.northOf(current);
+				theMaze.visitPos(current);
+				stack.push(current);
+			}else if(theMaze.movePossible(current,theMaze.southOf(current))){
+				current=theMaze.southOf(current);
+				theMaze.visitPos(current);
+				stack.push(current);
+			}else if(theMaze.movePossible(current,theMaze.eastOf(current))){
+				current=theMaze.eastOf(current);
+				theMaze.visitPos(current);
+				stack.push(current);
+			}else if(theMaze.movePossible(current,theMaze.westOf(current))){
+				current=theMaze.westOf(current);
+				theMaze.visitPos(current);
+				stack.push(current);
+			}else{
+				theMaze.abandonPos(current);
+				current=(Coordinate)stack.pop();
+				theMaze.abandonPos(current);
+			}
+			myWindow.update(current);
+			
+		}
+		
+
+	}
+    
+    
 
     public static void main(String[] args) {
         Scanner fromUser = new Scanner(System.in);
@@ -26,10 +56,10 @@ public class MazeSolver {
             myWindow.showMaze();
             findPath(aMaze);
             try {
-                Thread.sleep(5000);
+                Thread.sleep(50000);
             } catch (Exception ex) {
             }
-            myWindow.destroyMaze();
+            myWindow.destroyMaze(); 
         }
     }
 }
